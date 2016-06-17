@@ -1,2 +1,4 @@
 node_modules
 coverage
+generators/empty-template/templates/
+generators/master/templates/
