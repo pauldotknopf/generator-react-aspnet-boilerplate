@@ -1,6 +1,6 @@
 {
   "name": "generator-react-aspnet-boilerplate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A boiler plate for getting started with ASP.NET projects using react/redux/universal-rendering",
   "homepage": "https://github.com/pauldotknopf/react-aspnet-boilerplate",
   "author": {
@@ -9,7 +9,8 @@
     "url": "https://github.com/pauldotknopf/generator-react-aspnet-boilerplate"
   },
   "files": [
-    "generators"
+    "generators",
+    "src"
   ],
   "main": "generators\\index.js",
   "keywords": [
