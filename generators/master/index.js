@@ -52,9 +52,6 @@ module.exports = yeoman.Base.extend({
 
     copyFromGlob(this ,['**/*', '**/.*', '!resources/**/*', '!resources', '!LICENSE', '!README.md']);
 
-  },
-
-  install: function () {
-    this.installDependencies();
   }
+
 });
