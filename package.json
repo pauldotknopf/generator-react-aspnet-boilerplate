@@ -1,12 +1,12 @@
 {
   "name": "generator-react-aspnet-boilerplate",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A boiler plate for getting started with ASP.NET projects using react/redux/universal-rendering",
   "homepage": "https://github.com/pauldotknopf/react-aspnet-boilerplate",
   "author": {
     "name": "Paul Knopf",
     "email": "pauldotknopf@gmail.com",
-    "url": "http://pknopf.com/"
+    "url": "https://github.com/pauldotknopf/generator-react-aspnet-boilerplate"
   },
   "files": [
     "generators"
@@ -52,7 +52,7 @@
       "mocha": true
     }
   },
-  "repository": "https://github.com/pauldotknopf/react-aspnet-boilerplate-yeoman.git",
+  "repository": "https://github.com/pauldotknopf/generator-react-aspnet-boilerplate.git",
   "scripts": {
     "prepublish": "gulp prepublish",
     "test": "gulp"
