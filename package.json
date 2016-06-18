@@ -22,6 +22,8 @@
   ],
   "dependencies": {
     "chalk": "^1.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
     "nodegit": "^0.13.2",
     "rimraf": "^2.5.2",
     "yeoman-generator": "^0.22.0",

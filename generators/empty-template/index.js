@@ -2,11 +2,16 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var path = require('path');
+var replace = require('gulp-replace');
+var rename = require('gulp-rename');
 
 module.exports = yeoman.Base.extend({
 
   initializing: function() {
-
+    // if this isn't here, then the default app generator (that proxy's to this)
+    // will use it's templates directory, which is non-existent.
+    this.sourceRoot(path.join(__dirname, 'templates'));
   },
 
   prompting: function () {
@@ -18,93 +23,42 @@ module.exports = yeoman.Base.extend({
     ));
 
     var prompts = [{
-      type: 'confirm',
-      name: 'someAnswer',
-      message: 'Would you like to enable this option?',
-      default: true
+      type    : 'input',
+      name    : 'projectName',
+      message : 'Your project name?',
+      default : 'React'
     }];
 
     this.prompt(prompts, function (props) {
       this.props = props;
-      // To access props later use this.props.someAnswer;
-
       done();
     }.bind(this));
   },
 
   writing: function () {
+    var projectName = this.props.projectName;
+
+    // Replace all isntances of 'ReactBoilerplate' with the provided project name.
+    this.registerTransformStream(replace('ReactBoilerplate', projectName, {skipBinary: true /*don't mess with images, etc*/}));
+
+    // Move and rename files from 'ReactBoilerplate' to the provided project name.
+    this.registerTransformStream(rename(function (path) {
+      path.dirname = path.dirname.replace('ReactBoilerplate', projectName);
+      if(path.basename == 'ReactBoilerplate')
+        path.basename = projectName;
+    }));
+    
+    // Copy all the files
     this.fs.copy(
       this.templatePath('**/*'),
       this.destinationPath()
     );
+
+    // Also, copy all the dotfiles.
     this.fs.copy(
       this.templatePath('**/.*'),
       this.destinationPath()
     );
-    this.fs.copy(
-      this.templatePath('**/*.cs'),
-      this.destinationPath(),
-      {
-        process: function(contents) {
-          console.log("c#");
-          console.log(contents[0]);
-          console.log(contents[1]);
-          console.log(contents[2]);
-
-          var missingBOM = (contents[0] !== 0x69 && contents[1] !== 0x6D && contents[2] !== 0x70);
-
-          console.log(missingBOM);
-
-          // if(missingBOM) return contents;
-          //
-          // return "test";
-          //
-          // console.log("missing bom = " + missingBOM);
-
-          var s = contents.toString();
-          return s;
-          // var BOM = new Buffer([0xEF,0xBB,0xBF]);
-          //
-          // return new Buffer(s, 'utf-8');
-        }
-      }
-    );
-    // this.fs.copy(
-    //   this.templatePath('**/*.cs'),
-    //   this.destinationPath(),
-    //   {
-    //     process: function(contents) {
-    //       return "CSHARP!";
-    //     }
-    //   }
-    // );
-    // this.fs.copy(
-    //   this.templatePath('**/*.cs'),
-    //   this.destinationPath(),
-    //   {
-    //     process: function(contents) {
-    //
-    //       console.log(contents[0]);
-    //       console.log(contents[1]);
-    //       console.log(contents[2]);
-    //
-    //       var missingBOM = (contents[0] !== 0x69 && contents[1] !== 0x6D && contents[2] !== 0x70);
-    //
-    //       console.log(missingBOM);
-    //
-    //       if(missingBOM) return contents;
-    //
-    //       return "test";
-    //
-    //       console.log("missing bom = " + missingBOM);
-    //
-    //       var s = contents.toString('utf-8');
-    //       var BOM = new Buffer([0xEF,0xBB,0xBF]);
-    //
-    //       return new Buffer(s, 'utf-8');
-    //     }
-    //   }
-    // );
   },
 
   install: function () {
