@@ -5,6 +5,7 @@ var yosay = require('yosay');
 var path = require('path');
 var replace = require('gulp-replace');
 var rename = require('gulp-rename');
+var copyFromGlob = require('../../src/copyFromGlob');
 
 module.exports = yeoman.Base.extend({
 
@@ -36,6 +37,7 @@ module.exports = yeoman.Base.extend({
   },
 
   writing: function () {
+
     var projectName = this.props.projectName;
 
     // Replace all isntances of 'ReactBoilerplate' with the provided project name.
@@ -48,17 +50,8 @@ module.exports = yeoman.Base.extend({
         path.basename = projectName;
     }));
 
-    // Copy all the files
-    this.fs.copy(
-      this.templatePath('**/*'),
-      this.destinationPath()
-    );
+    copyFromGlob(this ,['**/*', '**/.*', '!resources/**/*', '!resources', '!LICENSE', '!README.md']);
 
-    // Also, copy all the dotfiles.
-    this.fs.copy(
-      this.templatePath('**/.*'),
-      this.destinationPath()
-    );
   },
 
   install: function () {
